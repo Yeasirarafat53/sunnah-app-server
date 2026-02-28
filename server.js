@@ -17,9 +17,9 @@ app.use('/api/hadiths', require('./src/routes/hadith.routes'));
 app.use('/api/duas', require('./src/routes/dua.routes'));
 app.use('/api/categories', require('./src/routes/category.routes'));
 
-app.use(cors({
-  origin: 'http://localhost:3000'
-}));
+// app.use(cors({
+//   origin: 'http://localhost:3000'
+// }));
 
 // Home route
 app.get('/', (req, res) => {
