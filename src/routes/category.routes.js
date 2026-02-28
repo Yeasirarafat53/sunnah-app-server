@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Category = require('../models/Category');
 
+const authMiddleware = require('../middleware/auth.middleware');
+
 // GET সব category
 router.get('/', async (req, res) => {
   try {
@@ -13,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 // POST নতুন category
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware,async (req, res) => {
   try {
     const category = await Category.create(req.body);
     res.status(201).json({ success: true, data: category });
@@ -23,7 +25,7 @@ router.post('/', async (req, res) => {
 });
 
 // DELETE category
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',authMiddleware, async (req, res) => {
   try {
     await Category.findByIdAndDelete(req.params.id);
     res.json({ success: true, message: 'Category deleted' });
@@ -32,7 +34,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const category = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json({ success: true, data: category });

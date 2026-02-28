@@ -9,11 +9,14 @@ const {
   searchHadiths,
 } = require('../controllers/hadith.controller');
 
+const authMiddleware = require('../middleware/auth.middleware');
+
 router.get('/', getAllHadiths);
 router.get('/search', searchHadiths);
 router.get('/:id', getHadithById);
-router.post('/', createHadith);
-router.put('/:id', updateHadith);
-router.delete('/:id', deleteHadith);
+
+router.post('/',authMiddleware, createHadith);
+router.put('/:id',authMiddleware, updateHadith);
+router.delete('/:id',authMiddleware, deleteHadith);
 
 module.exports = router;
